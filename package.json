@@ -1,0 +1,35 @@
+{
+  "name": "kaido-sushi",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@nuxt/hints": "1.1.4",
+    "@nuxt/image": "2.1.0",
+    "@nuxt/ui": "^4.11.0",
+    "@nuxtjs/i18n": "10.6.0",
+    "@nuxtjs/seo": "5.3.14",
+    "@tresjs/nuxt": "5.6.3",
+    "@vueuse/nuxt": "14.4.0",
+    "gsap": "^3.15.0",
+    "nuxt": "^4.5.2",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.185.1",
+    "vue": "^3.5.40"
+  },
+  "devDependencies": {
+    "@iconify-json/circle-flags": "^1.2.10",
+    "@iconify-json/lucide": "^1.2.127",
+    "@iconify-json/simple-icons": "^1.2.94",
+    "@takumi-rs/core": "^2.13.3",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.11"
+  },
+  "packageManager": "pnpm@11.24.0"
+}
