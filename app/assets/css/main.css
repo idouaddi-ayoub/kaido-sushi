@@ -1,18 +1,88 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
+@theme {
+  --font-sans: "Satoshi", system-ui, sans-serif;
+  --font-display: "Jost", system-ui, sans-serif;
+}
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+@theme static {
+  --color-saumon-50: #fef4f1;
+  --color-saumon-100: #fee6de;
+  --color-saumon-200: #fdcbbc;
+  --color-saumon-300: #faa68c;
+  --color-saumon-400: #f4774e;
+  --color-saumon-500: #e4562a;
+  --color-saumon-600: #c6421b;
+  --color-saumon-700: #a33418;
+  --color-saumon-800: #822c18;
+  --color-saumon-900: #6a2717;
+  --color-saumon-950: #3a1109;
+
+  --color-cuivre-50: #faf6f0;
+  --color-cuivre-100: #f3e9d9;
+  --color-cuivre-200: #e8d3b3;
+  --color-cuivre-300: #ddb472;
+  --color-cuivre-400: #cb9a5f;
+  --color-cuivre-500: #b98a55;
+  --color-cuivre-600: #9b6f44;
+  --color-cuivre-700: #7c5738;
+  --color-cuivre-800: #63462f;
+  --color-cuivre-900: #513a28;
+  --color-cuivre-950: #2c1e14;
+
+  --color-vert-50: #f1f6f3;
+  --color-vert-100: #deeae3;
+  --color-vert-200: #bfd5c7;
+  --color-vert-300: #95b8a5;
+  --color-vert-400: #6a9682;
+  --color-vert-500: #4c7865;
+  --color-vert-600: #3a5e4f;
+  --color-vert-700: #2f4a3c;
+  --color-vert-800: #283d33;
+  --color-vert-900: #22332b;
+  --color-vert-950: #101a15;
+
+  --color-ardoise-50: #f7f6f5;
+  --color-ardoise-100: #edebe9;
+  --color-ardoise-200: #d9d5d1;
+  --color-ardoise-300: #bab4ae;
+  --color-ardoise-400: #948c85;
+  --color-ardoise-500: #776f68;
+  --color-ardoise-600: #605953;
+  --color-ardoise-700: #4e4844;
+  --color-ardoise-800: #35312e;
+  --color-ardoise-900: #201e1c;
+  --color-ardoise-950: #171513;
+}
+
+:root {
+  --ui-radius: 0.125rem;
+}
+
+@utility grain {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .font-display {
+    font-weight: 300;
+    letter-spacing: 0.18em;
+  }
 }
