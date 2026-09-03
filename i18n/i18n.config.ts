@@ -3,10 +3,10 @@ import fr from "./locales/fr";
 
 export default defineI18nConfig(() => ({
   legacy: false,
-  locales: ["en", "fr"],
-  locale: "en",
+  locales: ["fr", "en"],
+  locale: "fr",
   messages: {
-    en,
     fr,
+    en,
   },
 }));

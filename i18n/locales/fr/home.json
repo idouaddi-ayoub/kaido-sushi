@@ -1,5 +1,22 @@
 {
   "hero": {
-    "line1": "Become more"
+    "tagline": "Recette japonaise créative",
+    "scroll": "Faire défiler"
+  },
+  "nav": {
+    "carte": "La carte",
+    "lieu": "Le lieu",
+    "traiteur": "Traiteur",
+    "infos": "Nous trouver",
+    "menu": "Menu"
+  },
+  "hours": {
+    "openUntil": "Ouvert · ferme à {time}",
+    "opensAt": "Ouvre à {time}",
+    "opensTomorrow": "Ouvre demain à {time}",
+    "closedToday": "Fermé le dimanche",
+    "closedNow": "Fermé",
+    "shortOpen": "Ouvert",
+    "shortClosed": "Fermé"
   }
 }

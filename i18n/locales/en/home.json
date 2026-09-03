@@ -1,5 +1,19 @@
 {
-  "hero": {
-    "line1": "Become more"
+  "hero": { "tagline": "Creative Japanese cooking", "scroll": "Scroll" },
+  "nav": {
+    "carte": "Menu",
+    "lieu": "The room",
+    "traiteur": "Catering",
+    "infos": "Find us",
+    "menu": "Menu"
+  },
+  "hours": {
+    "openUntil": "Open · closes at {time}",
+    "opensAt": "Opens at {time}",
+    "opensTomorrow": "Opens tomorrow at {time}",
+    "closedToday": "Closed on Sundays",
+    "closedNow": "Closed",
+    "shortOpen": "Open",
+    "shortClosed": "Closed"
   }
 }
