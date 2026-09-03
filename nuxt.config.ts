@@ -1,7 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2026-06-30",
-
+  css: ["~/assets/css/main.css"],
   modules: [
     "@nuxt/ui",
     "@nuxt/image",
@@ -11,27 +10,44 @@ export default defineNuxtConfig({
     "@tresjs/nuxt",
     "@vueuse/nuxt",
   ],
+  site: {
+    url: "https://kaidosushibar.fr",
+    name: "Kaido Sushi Bar",
+  },
+
   icon: {
     serverBundle: {
       collections: ["lucide", "simple-icons", "circle-flags"],
     },
   },
+  fonts: {
+    families: [
+      {
+        name: "Satoshi",
+        provider: "local",
+        global: true,
+      },
+      { name: "Jost", provider: "google", weights: [300, 400], global: true },
+    ],
+  },
   devtools: {
     enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
   },
-
-  css: ["~/assets/css/main.css"],
-
   routeRules: {
     "/": { prerender: true },
-    "/fr": { prerender: true },
+    "/en": { prerender: true },
   },
-
   i18n: {
     locales: [
-      { code: "en", name: "English", language: "en-US" },
       { code: "fr", name: "French", language: "fr-FR" },
+      { code: "en", name: "English", language: "en-US" },
     ],
-    defaultLocale: "en",
+    defaultLocale: "fr",
+    strategy: "prefix_except_default",
+    detectBrowserLanguage: false,
   },
 });

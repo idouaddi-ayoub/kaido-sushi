@@ -28,6 +28,7 @@
     "@iconify-json/lucide": "^1.2.127",
     "@iconify-json/simple-icons": "^1.2.94",
     "@takumi-rs/core": "^2.13.3",
+    "nuxtseo-layer-devtools": "^5.3.14",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.11"
   },
