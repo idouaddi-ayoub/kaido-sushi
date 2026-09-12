@@ -5,7 +5,7 @@ const { city } = useVenue();
 
 <template>
   <section
-    class="relative isolate flex min-h-svh w-full items-center overflow-hidden"
+    class="relative isolate flex min-h-svh w-full items-center overflow-hidden pt-20 sm:pt-0"
   >
     <UContainer
       class="relative mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-8"
@@ -18,7 +18,7 @@ const { city } = useVenue();
         </h1>
 
         <p
-          class="mt-6 max-w-md whitespace-pre-line text-balance text-ardoise-200"
+          class="mt-6 max-w-md whitespace-pre-line text-balance text-ardoise-200 hidden sm:block"
         >
           {{ t("home.hero.body", { city }) }}
         </p>
