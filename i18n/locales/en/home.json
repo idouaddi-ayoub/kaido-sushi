@@ -1,11 +1,19 @@
 {
-  "hero": { "tagline": "Creative Japanese cooking", "scroll": "Scroll" },
+  "hero": {
+    "tagline": "Creative Japanese cooking",
+    "scroll": "Scroll",
+    "headline": "Japanese cooking, no rulebook",
+    "body": "Sushi, poke and katsu made in front of you, in {city}.\nA creative take on Japanese food, meant to be shared.",
+    "cta": "View the menu",
+    "imageAlt": "A signature dish at Kaido Sushi Bar"
+  },
   "nav": {
-    "carte": "Menu",
-    "lieu": "The room",
-    "traiteur": "Catering",
+    "menu": "Menu",
+    "place": "The room",
+    "catering": "Catering",
     "infos": "Find us",
-    "menu": "Menu"
+    "language": "Change language",
+    "home": "Kaido Sushi Bar — home"
   },
   "hours": {
     "openUntil": "Open · closes at {time}",
@@ -15,5 +23,55 @@
     "closedNow": "Closed",
     "shortOpen": "Open",
     "shortClosed": "Closed"
+  },
+  "backToTop": "Back to top",
+  "menu": {
+    "eyebrow": "The menu",
+    "title": "What comes out of the kitchen",
+    "full": "See the full menu",
+    "items": [
+      {
+        "name": "Salmon avocado",
+        "note": "The house classic, rolled to order."
+      },
+      {
+        "name": "Poke bowl",
+        "note": "Seasoned rice, raw fish, crisp vegetables."
+      },
+      {
+        "name": "Katsu bowl",
+        "note": "Crunchy breading, house sauce, hot rice."
+      }
+    ]
+  },
+  "place": {
+    "eyebrow": "The room",
+    "title": "A dining room, not a counter",
+    "body": "People come to Kaido with family, with friends, at lunch and in the evening.\nBanquettes, warm light, and the chef working the fish in front of you.",
+    "imageAlt": "The dining room at Kaido Sushi Bar"
+  },
+  "catering": {
+    "eyebrow": "Catering",
+    "title": "For your events",
+    "body": "Made-up platters, delivery and service for company lunches, birthdays and receptions. Tell us how many people, we'll handle the rest.",
+    "cta": "Call us"
+  },
+  "infos": {
+    "eyebrow": "Find us",
+    "title": "Come and see us",
+    "hoursLabel": "Hours",
+    "hours": "Monday – Saturday\n12pm – 2pm  ·  7pm – 10pm\nClosed Sundays",
+    "addressLabel": "Address",
+    "address": "To be confirmed",
+    "phoneLabel": "Phone",
+    "mapTitle": "Map — Kaido Sushi Bar location",
+    "directions": "Get directions"
+  },
+  "seo": {
+    "title": "Sushi & poke in Troyes",
+    "description": "Sushi, poke and katsu prepared in front of you. Open Monday to Saturday, lunch and dinner."
+  },
+  "footer": {
+    "contact": "Contact"
   }
 }
