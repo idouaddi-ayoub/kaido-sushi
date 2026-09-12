@@ -6,8 +6,7 @@ export default defineAppConfig({
       primary: "saumon",
       secondary: "cuivre",
       neutral: "ardoise",
-
-      success: "vert",
+      success: "green",
       info: "cuivre",
       warning: "amber",
       error: "red",
