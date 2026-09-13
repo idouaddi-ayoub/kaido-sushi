@@ -45,7 +45,7 @@ const { city } = useVenue();
       </div>
     </UContainer>
     <div class="absolute text-center w-full sm:bottom-30 bottom-10">
-      <div class="sm:text-[250px] text-[125px] leading-none tracking-tight">
+      <div class="sm:text-[250px] text-[100px] leading-none tracking-tight">
         <span
           class="sm:text-transparent [-webkit-text-stroke:1.5px_var(--color-stone-700)]"
           >KA</span
