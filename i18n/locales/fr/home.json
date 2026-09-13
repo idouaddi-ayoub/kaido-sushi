@@ -26,23 +26,27 @@
   },
   "backToTop": "Retour en haut",
   "menu": {
+    "dishes": {
+      "pushPopSushi": {
+        "note": "Six recettes en tube — saumon, thon, california, poulet, tempura, veggie",
+        "alt": "Push-pop de sushi en tube transparent, riz et garniture en couches"
+      },
+      "tastyCroustyRolls": {
+        "note": "Poulet croustillant, sauce blanche maison, sweet chili",
+        "alt": "Rolls de riz sans algue garnis de poulet croustillant, nappés de sauce blanche et d'oignons frits"
+      },
+      "boxADeux": {
+        "note": "Assortiment 32 pièces",
+        "alt": "Plateau de soixante-deux pièces : sushis, makis, californias et printemps rolls"
+      },
+      "boBunPoulet": {
+        "note": "Vermicelles, poulet mariné, nems, crudités",
+        "alt": "Bol de bo bun au poulet mariné avec vermicelles de riz, nems croustillants et crudités"
+      }
+    },
     "eyebrow": "La carte",
     "title": "Ce qui sort de la cuisine",
-    "full": "Voir la carte complète",
-    "items": [
-      {
-        "name": "Saumon avocat",
-        "note": "Le classique de la maison, roulé à la commande."
-      },
-      {
-        "name": "Poke bowl",
-        "note": "Riz vinaigré, poisson cru, légumes croquants."
-      },
-      {
-        "name": "Katsu bowl",
-        "note": "Panure croustillante, sauce maison, riz chaud."
-      }
-    ]
+    "full": "Voir la carte complète"
   },
   "place": {
     "eyebrow": "Le lieu",

@@ -1,33 +1,33 @@
 <script setup lang="ts">
-const { t, tm } = useI18n();
 const { menuUrl } = useVenue();
+const { t } = useI18n();
 
-const dishes = [
+const dishes = computed(() => [
+  {
+    name: "Push-Pop Sushi",
+    note: t("home.menu.dishes.pushPopSushi.note"),
+    img: "/media/menu/push-pop-sushi.webp",
+    alt: t("home.menu.dishes.pushPopSushi.alt"),
+  },
   {
     name: "Tasty Crousty Rolls",
-    note: "Saumon, avocat, tempura",
+    note: t("home.menu.dishes.tastyCroustyRolls.note"),
     img: "/media/menu/tasty-crousty-rolls.webp",
-    alt: "Six rouleaux de saumon panés tempura sur une ardoise noire",
+    alt: t("home.menu.dishes.tastyCroustyRolls.alt"),
   },
   {
     name: "Box à Deux",
-    note: "Assortiment 24 pièces",
+    note: t("home.menu.dishes.boxADeux.note"),
     img: "/media/menu/box-à-deux.webp",
-    alt: "Boîte de vingt-quatre pièces de sushis variées",
+    alt: t("home.menu.dishes.boxADeux.alt"),
   },
   {
     name: "Bo Bun Poulet",
-    note: "Vermicelles, poulet grillé, crudités",
+    note: t("home.menu.dishes.boBunPoulet.note"),
     img: "/media/menu/bo-bun-poulet.webp",
-    alt: "Bol de bo bun au poulet grillé avec vermicelles et crudités",
+    alt: t("home.menu.dishes.boBunPoulet.alt"),
   },
-  {
-    name: "Bo Bun Poulet",
-    note: "Vermicelles, poulet grillé, crudités",
-    img: "/media/menu/bo-bun-poulet.webp",
-    alt: "Bol de bo bun au poulet grillé avec vermicelles et crudités",
-  },
-];
+]);
 </script>
 
 <template>
@@ -61,19 +61,23 @@ const dishes = [
         </UButton>
       </div>
 
-      <ul class="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+      <ul role="list" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <li v-for="(d, i) in dishes" :key="d.img" class="group">
           <div class="aspect-4/5 overflow-hidden bg-neutral-100 rounded-4xl">
-            <NuxtImg
+            <NuxtPicture
               :src="d.img"
               :alt="d.alt"
               :width="800"
               :height="1000"
-              format="avif"
+              format="avif,webp"
               quality="72"
-              :loading="i < 3 ? 'eager' : 'lazy'"
+              :loading="i === 0 ? 'eager' : 'lazy'"
+              :preload="i === 0"
               sizes="100vw sm:50vw lg:400px"
-              class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+              :img-attrs="{
+                class:
+                  'size-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-105',
+              }"
             />
           </div>
 

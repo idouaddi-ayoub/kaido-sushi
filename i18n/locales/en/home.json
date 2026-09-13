@@ -26,23 +26,27 @@
   },
   "backToTop": "Back to top",
   "menu": {
+    "dishes": {
+      "pushPopSushi": {
+        "note": "Six recipes in a tube — salmon, tuna, chicken, tempura, veggie",
+        "alt": "Sushi push-pop in a clear tube, rice and filling in layers"
+      },
+      "tastyCroustyRolls": {
+        "note": "Crispy chicken, house white sauce, sweet chilli",
+        "alt": "Nori-free rice rolls filled with crispy chicken, topped with white sauce and fried onions"
+      },
+      "boxADeux": {
+        "note": "32-piece sharing platter",
+        "alt": "Platter of sixty-two pieces: nigiri, maki, california rolls and spring rolls"
+      },
+      "boBunPoulet": {
+        "note": "Rice noodles, marinated chicken, spring rolls, fresh vegetables",
+        "alt": "Bo bun bowl with marinated chicken, rice noodles, crispy chicken spring rolls and fresh vegetables"
+      }
+    },
     "eyebrow": "The menu",
     "title": "What comes out of the kitchen",
-    "full": "See the full menu",
-    "items": [
-      {
-        "name": "Salmon avocado",
-        "note": "The house classic, rolled to order."
-      },
-      {
-        "name": "Poke bowl",
-        "note": "Seasoned rice, raw fish, crisp vegetables."
-      },
-      {
-        "name": "Katsu bowl",
-        "note": "Crunchy breading, house sauce, hot rice."
-      }
-    ]
+    "full": "See the full menu"
   },
   "place": {
     "eyebrow": "The room",
