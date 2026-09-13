@@ -8,17 +8,15 @@ const { t } = useI18n();
       v-reveal
       class="mx-auto grid max-w-7xl items-center gap-14 px-6 transition-all duration-1000 ease-out sm:px-12 lg:grid-cols-2"
     >
-      <div class="relative aspect-4/3 overflow-hidden">
+      <div class="relative overflow-hidden rounded-full">
         <NuxtImg
-          src="/test.webp"
+          src="/KAIDO_SUSHI.webp"
           :alt="t('home.place.imageAlt')"
-          class="size-full object-cover"
+          class="size-full object-cover scale-105"
           sizes="100vw lg:50vw"
           loading="lazy"
         />
-        <div
-          class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-cuivre-500/20"
-        />
+        <div class="pointer-events-none absolute inset-0" />
       </div>
 
       <div>
