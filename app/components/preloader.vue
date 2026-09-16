@@ -1,72 +1,138 @@
 <script setup lang="ts">
-const MIN_MS = 900;
+import gsap from "gsap";
+
+const { finish } = usePreloader();
+
 const MAX_MS = 3500;
+const letters = "KAIDO".split("");
 
+const root = ref<HTMLElement | null>(null);
 const active = ref(true);
-const leaving = ref(false);
 
-useHead({
-  bodyAttrs: {
-    class: computed(() => (active.value ? "overflow-hidden" : "")),
-  },
-  script: [
-    {
-      innerHTML: `try{if(sessionStorage.getItem('kaido:seen')==='1'||location.hash)document.documentElement.classList.add('kaido-skip')}catch(e){}`,
-      tagPosition: "head",
-    },
-  ],
-});
+let ctx: gsap.Context | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
+let tick: gsap.TickerCallback | undefined;
+let dismissed = false;
+
+const play = (tl: gsap.core.Timeline) => {
+  if (tick) gsap.ticker.remove(tick);
+
+  const next: gsap.TickerCallback = (_t, dt) => {
+    const time = Math.min(tl.totalTime() + dt / 1000, tl.totalDuration());
+    tl.totalTime(time);
+    if (time >= tl.totalDuration()) gsap.ticker.remove(next);
+  };
+
+  tick = next;
+  gsap.ticker.add(next);
+  return tl;
+};
 
 const dismiss = (instant = false) => {
+  if (dismissed) return;
+  dismissed = true;
+
   if (instant) {
     active.value = false;
+    finish();
     return;
   }
-  leaving.value = true;
-  setTimeout(() => (active.value = false), 900);
+
+  ctx?.add(() => {
+    play(
+      gsap
+        .timeline({
+          paused: true,
+          defaults: { duration: 0.6, ease: "power3.in" },
+          onComplete: () => (active.value = false),
+        })
+        .set(root.value, { pointerEvents: "none" })
+        .to(".kaido-letter", { yPercent: -110, stagger: 0.04 })
+        .to(".kaido-svg", { scale: 0.8, autoAlpha: 0 }, 0)
+        .to(".kaido-rule", { scaleX: 0, transformOrigin: "right" }, 0)
+        .to(
+          root.value,
+          { clipPath: "inset(0% 0% 100% 0%)", duration: 1, ease: "expo.inOut" },
+          0.35,
+        )
+        .call(finish, [], 0.7),
+    );
+  });
 };
+
+const pageLoaded = () =>
+  document.readyState === "complete"
+    ? Promise.resolve()
+    : new Promise((r) => window.addEventListener("load", r, { once: true }));
 
 onMounted(() => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const deepLink = window.location.hash !== "";
+  const skip = document.documentElement.classList.contains("kaido-skip");
 
-  if (reduced || deepLink) {
-    dismiss(true);
-    return;
-  }
+  if (reduced || skip) return dismiss(true);
 
-  const started = performance.now();
+  let intro!: gsap.core.Timeline;
+  ctx = gsap.context(() => {
+    intro = play(
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .to(".kaido-circle", {
+          strokeDashoffset: 0,
+          duration: 1.4,
+          ease: "power2.inOut",
+        })
+        .from(
+          ".kaido-svg",
+          { rotate: -60, scale: 0.9, duration: 1.4, ease: "power2.inOut" },
+          0,
+        )
+        .set(".kaido-word", { autoAlpha: 1 }, 0.5)
+        .from(
+          ".kaido-letter",
+          { yPercent: 110, duration: 0.8, stagger: 0.06 },
+          0.5,
+        )
+        .to(".kaido-rule", { scaleX: 1, duration: 0.6 }, "-=0.4"),
+    );
+  }, root.value!);
+
+  gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
 
   const poster = new Image();
   poster.src = "/test.webp";
 
-  Promise.race([
+  const loaded = Promise.race([
     poster.decode().catch(() => undefined),
-    new Promise((r) => window.addEventListener("load", r, { once: true })),
-    new Promise((r) => setTimeout(r, MAX_MS)),
-  ]).then(() => {
-    setTimeout(
-      () => dismiss(),
-      Math.max(0, MIN_MS - (performance.now() - started)),
-    );
-  });
+    pageLoaded(),
+    new Promise((r) => (timer = setTimeout(r, MAX_MS))),
+  ]);
+
+  Promise.all([intro.then(), loaded]).then(() => dismiss());
+});
+
+onUnmounted(() => {
+  clearTimeout(timer);
+  if (tick) gsap.ticker.remove(tick);
+  ctx?.revert();
 });
 </script>
 
 <template>
   <div
     v-if="active"
-    class="kaido-preloader fixed inset-0 z-100 grid place-items-center bg-black transition-[clip-path] duration-900 ease-[cubic-bezier(0.76,0,0.24,1)]"
-    :class="
-      leaving
-        ? 'pointer-events-none [clip-path:inset(0_0_100%_0)]'
-        : '[clip-path:inset(0_0_0_0)]'
-    "
+    ref="root"
+    class="kaido-preloader fixed inset-0 z-100 grid place-items-center bg-black"
+    style="clip-path: inset(0% 0% 0% 0%)"
     aria-hidden="true"
   >
     <div class="relative grid place-items-center">
-      <svg viewBox="0 0 200 200" class="size-[min(52vw,15rem)]" fill="none">
+      <svg
+        viewBox="0 0 200 200"
+        class="kaido-svg size-[min(52vw,15rem)]"
+        fill="none"
+      >
         <circle
+          class="kaido-circle"
           cx="100"
           cy="100"
           r="97"
@@ -75,19 +141,24 @@ onMounted(() => {
           pathLength="1"
           stroke-dasharray="1"
           stroke-dashoffset="1"
-          class="animate-[kaido-draw_1.6s_cubic-bezier(0.65,0,0.35,1)_forwards]"
           transform="rotate(-90 100 100)"
         />
       </svg>
 
       <span
-        class="absolute font-display text-[clamp(1.1rem,4vw,1.6rem)] text-white opacity-0 animate-[kaido-in_1s_ease-out_0.5s_forwards]"
+        class="kaido-word invisible absolute flex overflow-hidden pl-[0.3em] font-display text-[clamp(1.1rem,4vw,1.6rem)] tracking-[0.3em] text-white"
       >
-        KAIDO
+        <span
+          v-for="(letter, i) in letters"
+          :key="i"
+          class="kaido-letter inline-block"
+        >
+          {{ letter }}
+        </span>
       </span>
 
       <span
-        class="absolute -bottom-10 h-px w-10 origin-left scale-x-0 bg-saumon-500 animate-[kaido-rule_0.8s_ease-out_1.1s_forwards]"
+        class="kaido-rule absolute -bottom-10 h-px w-10 origin-left scale-x-0 bg-saumon-500"
       />
     </div>
   </div>
@@ -96,29 +167,5 @@ onMounted(() => {
 <style>
 .kaido-skip .kaido-preloader {
   display: none;
-}
-
-@keyframes kaido-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes kaido-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.5rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes kaido-rule {
-  to {
-    transform: scaleX(1);
-  }
 }
 </style>
