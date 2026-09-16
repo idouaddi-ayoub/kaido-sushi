@@ -25,11 +25,21 @@ function venueNow(now: Date) {
   };
 }
 
-const fmt = (m: number) =>
-  `${String(Math.floor(m / 60)).padStart(2, "0")}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}`;
+function fmt(m: number, loc: string) {
+  const h = Math.floor(m / 60);
+  const min = m % 60;
+
+  if (loc.startsWith("fr")) {
+    return `${String(h).padStart(2, "0")}h${min ? String(min).padStart(2, "0") : ""}`;
+  }
+
+  return `${h % 12 || 12}${min ? `:${String(min).padStart(2, "0")}` : ""}${h < 12 ? "am" : "pm"}`;
+}
 
 export function useOpeningHours() {
-  const now = ref(new Date());
+  const { locale } = useI18n();
+
+  const now = ref<Date | null>(null);
   let timer: ReturnType<typeof setInterval>;
 
   onMounted(() => {
@@ -39,7 +49,10 @@ export function useOpeningHours() {
   onUnmounted(() => clearInterval(timer));
 
   const state = computed(() => {
+    if (!now.value) return null;
+
     const { day, minutes } = venueNow(now.value);
+    const f = (m: number) => fmt(m, locale.value);
 
     if (CLOSED_DAYS.includes(day)) {
       return {
@@ -54,7 +67,7 @@ export function useOpeningHours() {
         return {
           open: true,
           key: "home.hours.openUntil" as const,
-          params: { time: fmt(end) },
+          params: { time: f(end) },
         };
       }
     }
@@ -64,7 +77,7 @@ export function useOpeningHours() {
       return {
         open: false,
         key: "home.hours.opensAt" as const,
-        params: { time: fmt(next[0]) },
+        params: { time: f(next[0]) },
       };
     }
 
@@ -74,12 +87,12 @@ export function useOpeningHours() {
       : {
           open: false,
           key: "home.hours.opensTomorrow" as const,
-          params: { time: fmt(SERVICES[0]![0]) },
+          params: { time: f(SERVICES[0]![0]) },
         };
   });
 
   return {
-    isOpen: computed(() => state.value.open),
+    isOpen: computed(() => state.value?.open ?? false),
     label: computed(() => state.value),
   };
 }

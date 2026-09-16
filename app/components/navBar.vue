@@ -1,41 +1,49 @@
 <script setup lang="ts">
-const { t, locale, locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
+import type { NavigationMenuItem } from "@nuxt/ui";
+
+const { t, locale } = useI18n();
+const localePath = useLocalePath();
+const route = useRoute();
 const { isOpen: venueOpen, label } = useOpeningHours();
+const { phoneDisplay } = useVenue();
+const scrollTo = useSmoothScroll();
 
-const PHONE = "0650993767";
-
-const sections = [
-  { id: "carte", key: "home.nav.carte" },
-  { id: "lieu", key: "home.nav.lieu" },
-  { id: "traiteur", key: "home.nav.traiteur" },
-  { id: "infos", key: "home.nav.infos" },
-];
-
-const menuOpen = ref(false);
+const open = ref(false);
 const { y } = useWindowScroll();
-
 const scrolled = computed(() => y.value > 80);
 
-const otherLocales = computed(() =>
-  locales.value.filter(
-    (l) => (typeof l === "string" ? l : l.code) !== locale.value,
-  ),
-);
-
-watch(menuOpen, (v) => {
-  if (import.meta.client) document.body.style.overflow = v ? "hidden" : "";
-});
-
-const go = (id: string) => {
-  menuOpen.value = false;
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+const go = (id?: string) => {
+  open.value = false;
+  scrollTo(id);
 };
+
+const onLogoClick = (e: MouseEvent, navigate: (e?: MouseEvent) => unknown) => {
+  if (route.path !== localePath("/") || e.metaKey || e.ctrlKey || e.shiftKey) {
+    return navigate(e);
+  }
+  e.preventDefault();
+  go();
+};
+
+const items = computed<NavigationMenuItem[]>(() =>
+  (["menu", "place", "catering", "infos"] as const).map((id) => ({
+    label: t(`home.nav.${id}`),
+    onSelect: (e: Event) => {
+      e.preventDefault();
+      go(id);
+    },
+  })),
+);
 </script>
 
 <template>
-  <header
-    class="fixed inset-x-0 top-0 z-50 transition-colors duration-500"
+  <UHeader
+    v-model:open="open"
+    mode="drawer"
+    :ui="{
+      root: 'fixed w-full top-0 z-50 border-0 transition-colors duration-500',
+      container: 'max-w-7xl h-16',
+    }"
     :class="scrolled ? 'bg-black/85 backdrop-blur-md' : 'bg-transparent'"
   >
     <div
@@ -43,32 +51,37 @@ const go = (id: string) => {
       :class="scrolled ? 'opacity-100' : 'opacity-0'"
     />
 
-    <nav
-      class="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8"
-    >
-      <button
-        class="font-display text-lg text-white transition-opacity duration-500"
-        :class="scrolled ? 'opacity-100' : 'pointer-events-none opacity-0'"
-        @click="go('hero')"
-      >
-        KAIDO
-      </button>
+    <template #left>
+      <NuxtLink v-slot="{ href, navigate }" :to="localePath('/')" custom>
+        <a
+          :href="href ?? undefined"
+          :aria-label="t('home.nav.home')"
+          class="shrink-0"
+          @click="onLogoClick($event, navigate)"
+        >
+          <NuxtImg
+            src="/KAIDO_SUSHI.webp"
+            alt=""
+            sizes="75px"
+            class="size-12.5 rounded-full"
+          />
+        </a>
+      </NuxtLink>
+    </template>
 
-      <!-- Desktop -->
-      <ul class="hidden items-center gap-9 md:flex">
-        <li v-for="s in sections" :key="s.id">
-          <button
-            class="font-display text-xs text-ardoise-200 transition-colors hover:text-cuivre-300"
-            @click="go(s.id)"
-          >
-            {{ t(s.key) }}
-          </button>
-        </li>
-      </ul>
+    <UNavigationMenu
+      :items="items"
+      variant="link"
+      :ui="{
+        link: 'font-display text-xs tracking-[0.16em] uppercase text-ardoise-200 hover:text-cuivre-300 after:hidden cursor-pointer',
+      }"
+    />
 
+    <template #right>
       <div class="flex items-center gap-4">
         <div
-          class="flex items-center gap-2 border border-cuivre-500/30 px-3 py-1.5"
+          v-if="label"
+          class="hidden items-center gap-2 border border-cuivre-500/30 px-3 py-1.5 md:flex rounded-3xl"
         >
           <span
             class="size-1.5 shrink-0 rounded-full"
@@ -77,68 +90,43 @@ const go = (id: string) => {
           <span
             class="text-[0.68rem] font-light tracking-wide text-ardoise-200"
           >
-            <span class="hidden sm:inline">{{
-              t(label.key, label.params)
-            }}</span>
-            <span class="sm:hidden">{{
-              t(venueOpen ? "home.hours.shortOpen" : "home.hours.shortClosed")
-            }}</span>
+            {{ t(label.key, label.params) }}
           </span>
         </div>
 
-        <NuxtLink
-          v-for="l in otherLocales"
-          :key="typeof l === 'string' ? l : l.code"
-          :to="switchLocalePath(typeof l === 'string' ? l : l.code)"
-          class="font-display text-[0.68rem] text-ardoise-300 transition-colors hover:text-cuivre-300"
-        >
-          {{ (typeof l === "string" ? l : l.code).toUpperCase() }}
-        </NuxtLink>
-
-        <button
-          class="md:hidden"
-          :aria-expanded="menuOpen"
-          :aria-label="t('nav.menu')"
-          @click="menuOpen = !menuOpen"
-        >
-          <UIcon
-            :name="menuOpen ? 'i-lucide-x' : 'i-lucide-menu'"
-            class="size-5 text-white"
-          />
-        </button>
+        <LangSwitch class="cursor-pointer rounded-3xl" />
       </div>
-    </nav>
+    </template>
 
-    <Transition
-      enter-active-class="transition duration-400 ease-out"
-      enter-from-class="opacity-0"
-      leave-active-class="transition duration-300 ease-in"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-if="menuOpen"
-        class="grain fixed inset-0 top-16 bg-ardoise-950 md:hidden"
-      >
-        <ul class="flex flex-col px-8 pt-10">
-          <li v-for="(s, i) in sections" :key="s.id">
-            <button
-              class="w-full border-b border-cuivre-500/15 py-5 text-left font-display text-2xl text-white"
-              :style="{ transitionDelay: `${i * 60}ms` }"
-              @click="go(s.id)"
-            >
-              {{ t(s.key) }}
-            </button>
-          </li>
-        </ul>
+    <template #body>
+      <div class="grain flex h-full flex-col bg-ardoise-950 px-2 pt-4">
+        <div v-if="label" class="mb-8 flex items-center gap-2 px-4">
+          <span
+            class="size-1.5 shrink-0 rounded-full"
+            :class="venueOpen ? 'bg-saumon-500' : 'bg-ardoise-500'"
+          />
+          <span class="text-[0.7rem] tracking-wide text-ardoise-300">
+            {{ t(label.key, label.params) }}
+          </span>
+        </div>
+
+        <UNavigationMenu
+          :items="items"
+          orientation="vertical"
+          variant="link"
+          :ui="{
+            link: 'py-5 border-b border-cuivre-500/15 font-display text-2xl text-white',
+          }"
+        />
 
         <a
-          :href="`tel:${PHONE}`"
-          class="mt-10 flex items-center justify-center gap-2 px-8 text-sm text-cuivre-300"
+          :href="`tel:${useVenue().phone}`"
+          class="py-5 flex items-center justify-center gap-2 text-sm text-cuivre-300"
         >
           <UIcon name="i-lucide-phone" class="size-4" />
-          06 50 99 37 67
+          {{ phoneDisplay }}
         </a>
       </div>
-    </Transition>
-  </header>
+    </template>
+  </UHeader>
 </template>
