@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "@tresjs/nuxt",
     "@vueuse/nuxt",
+    "@vercel/speed-insights",
   ],
   site: { url: siteUrl, name: "Kaido Sushi Bar" },
   linkChecker: {
