@@ -37,7 +37,7 @@ const dishes = computed(() => [
       class="mx-auto max-w-7xl px-6 transition-all duration-1000 ease-out sm:px-12"
     >
       <div
-        class="flex items-end justify-between gap-6 border-b border-black/10 pb-8"
+        class="flex sm:flex-row flex-col items-end justify-between gap-6 border-b border-black/10 pb-8"
       >
         <div>
           <p class="font-display text-2xl tracking-[0.24em] text-cuivre-600">

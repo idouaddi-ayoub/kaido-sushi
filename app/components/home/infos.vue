@@ -21,7 +21,6 @@ const { phone, phoneDisplay, mapQuery } = useVenue();
             {{ t("home.infos.title") }}
           </h2>
 
-          <!-- Live state. The one thing a passer-by actually needs. -->
           <div v-if="label" class="mt-9 flex items-center gap-3">
             <span
               class="size-2 shrink-0 rounded-full"
