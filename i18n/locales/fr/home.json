@@ -2,7 +2,7 @@
   "hero": {
     "tagline": "Recette japonaise créative",
     "scroll": "Faire défiler",
-    "headline": "Cuisine japonaise, sans les règles",
+    "headline": "Cuisine japonaise, sans règles",
     "body": "Sushi, poke et katsu préparés devant vous, à {city}.\nUne recette créative, pensée pour être partagée.",
     "cta": "Voir la carte",
     "imageAlt": "Un plat signature de Kaido Sushi Bar"
@@ -36,7 +36,7 @@
         "alt": "Rolls de riz sans algue garnis de poulet croustillant, nappés de sauce blanche et d'oignons frits"
       },
       "boxADeux": {
-        "note": "Assortiment 32 pièces",
+        "note": "Assortiment 62 pièces",
         "alt": "Plateau de soixante-deux pièces : sushis, makis, californias et printemps rolls"
       },
       "boBunPoulet": {
