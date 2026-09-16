@@ -38,8 +38,7 @@ function fmt(m: number, loc: string) {
 
 export function useOpeningHours() {
   const { locale } = useI18n();
-  // Stays null until mounted: the page is prerendered, so the server's clock
-  // says nothing about when it's viewed and would mismatch on hydration.
+
   const now = ref<Date | null>(null);
   let timer: ReturnType<typeof setInterval>;
 
