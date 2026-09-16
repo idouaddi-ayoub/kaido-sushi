@@ -12,7 +12,7 @@ const { t } = useI18n();
         <NuxtImg
           src="/KAIDO_SUSHI.webp"
           :alt="t('home.place.imageAlt')"
-          class="size-full object-cover scale-105"
+          class="size-full object-cover scale-115"
           sizes="100vw lg:50vw"
           loading="lazy"
         />

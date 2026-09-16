@@ -59,12 +59,7 @@ const items = computed<NavigationMenuItem[]>(() =>
           class="shrink-0"
           @click="onLogoClick($event, navigate)"
         >
-          <NuxtImg
-            src="/KAIDO_SUSHI.webp"
-            alt=""
-            sizes="75px"
-            class="size-12.5 rounded-full"
-          />
+          <NuxtImg src="/kaido_logo_white_.png" alt="" sizes="75px" />
         </a>
       </NuxtLink>
     </template>

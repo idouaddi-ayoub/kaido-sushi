@@ -134,7 +134,7 @@ onUnmounted(() => ctx?.revert());
           color="primary"
           variant="solid"
           size="lg"
-          class="hero-cta relative mt-9 overflow-hidden rounded-none font-display tracking-[0.14em] uppercase"
+          class="hero-cta relative mt-9 overflow-hidden font-display tracking-[0.14em] uppercase rounded-3xl"
           style="clip-path: inset(0% 100% 0% 0%)"
         >
           <span
