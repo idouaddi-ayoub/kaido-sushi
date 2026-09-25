@@ -1,5 +1,3 @@
-const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
 export default defineNuxtConfig({
   compatibilityDate: "2026-06-30",
   css: ["~/assets/css/main.css"],
@@ -13,7 +11,10 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@vercel/speed-insights",
   ],
-  site: { url: siteUrl, name: "Kaido Sushi Bar" },
+  site: {
+    url: "https://kaido-sushi.vercel.app",
+    name: "Kaido Sushi Bar",
+  },
   linkChecker: {
     failOnError: true,
   },
@@ -35,6 +36,7 @@ export default defineNuxtConfig({
       { name: "Jost", provider: "google", weights: [300, 400], global: true },
     ],
   },
+
   devtools: {
     enabled: true,
     timeline: {
@@ -56,7 +58,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    baseUrl: siteUrl,
+    baseUrl: "https://kaido-sushi.vercel.app",
     locales: [
       { code: "fr", name: "French", language: "fr-FR" },
       { code: "en", name: "English", language: "en-US" },
