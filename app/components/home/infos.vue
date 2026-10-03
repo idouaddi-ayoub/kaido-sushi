@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MapModal from "../MapModal.vue";
+
 const { t } = useI18n();
 const { isOpen: venueOpen, label } = useOpeningHours();
 const { phone, phoneDisplay, mapQuery } = useVenue();
@@ -77,12 +79,11 @@ const { phone, phoneDisplay, mapQuery } = useVenue();
         <div
           class="min-h-88 overflow-hidden ring-1 ring-cuivre-500/20 lg:min-h-full"
         >
-          <iframe
-            :title="t('home.infos.mapTitle')"
-            class="size-full grayscale-[0.6] invert-[0.92] contrast-[1.1]"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
+          <MapModal
             :src="`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`"
+            :maps-url="`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}`"
+            :title="t('home.infos.mapTitle')"
+            iframe-class="grayscale-[0.6] invert-[0.92] contrast-[1.1]"
           />
         </div>
       </div>

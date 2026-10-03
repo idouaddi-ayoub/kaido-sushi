@@ -23,7 +23,6 @@ const { title, description, footer } = defineProps<{
 <NuxtImg src="KAIDO_SUSHI.webp" height="330" class="rounded-full"/>
     </div>
 
-    <!-- Text -->
     <div class="flex flex-col justify-center pl-20 flex-1">
       <div class="flex flex-col">
         <span
